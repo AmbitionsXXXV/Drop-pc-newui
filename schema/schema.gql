@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserType {
+  id: String!
+  name: String!
+  desc: String!
+
+  """账户信息"""
+  account: String!
+
+  """电话号码"""
+  tel: String!
+
+  """创建时间"""
+  codeCreateTimeAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type OSSType {
+  """过期时间"""
+  expire: String!
+
+  """策略"""
+  policy: String!
+
+  """签名"""
+  signature: String!
+
+  """key"""
+  accessId: String!
+
+  """host"""
+  host: String!
+}
+
+type Result {
+  code: Int!
+  message: String!
+  data: String
+}
+
+type Query {
+  """使用 ID 查询用户"""
+  find(id: String!): UserType!
+
+  """使用 ID 查询用户信息"""
+  getUserInfo: UserType!
+
+  """获取 oss 相关信息"""
+  getOSSInfo: OSSType!
+}
+
+type Mutation {
+  """新增用户"""
+  create(params: UserInput!): Boolean!
+
+  """更新用户"""
+  update(id: String!, params: UserInput!): Boolean!
+
+  """删除一个用户"""
+  del(id: String!): Boolean!
+
+  """发送短信验证码"""
+  sendCodeMsg(tel: String!): Result!
+
+  """登录"""
+  login(tel: String!, code: String!): Result!
+}
+
+input UserInput {
+  name: String!
+  desc: String!
+}
