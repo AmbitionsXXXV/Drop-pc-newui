@@ -125,7 +125,7 @@ const AccountLogin: FC = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-[350px] mx-auto">
+              <Button type="submit" className="w-[350px] mx-auto rounded-xl">
                 Log in
               </Button>
             </form>

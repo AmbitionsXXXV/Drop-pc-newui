@@ -141,7 +141,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                       </FormControl>
                       <Button
                         disabled={disabled}
-                        className="flex-1 rounded-lg"
+                        className="flex-1 rounded-xl"
                         onClick={() => {
                           form.trigger("tel")
                           setDisabled(true)
@@ -156,7 +156,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                 )}
               />
 
-              <Button type="submit" className="w-[350px] mx-auto rounded-lg">
+              <Button type="submit" className="w-[350px] mx-auto rounded-xl">
                 Log in
               </Button>
             </form>
