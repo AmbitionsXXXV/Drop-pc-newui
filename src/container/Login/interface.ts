@@ -10,5 +10,5 @@ export interface IAccountFormInputs {
 
 export interface IMsgCodeFormInputs {
   tel: string
-  code: number
+  code: string
 }

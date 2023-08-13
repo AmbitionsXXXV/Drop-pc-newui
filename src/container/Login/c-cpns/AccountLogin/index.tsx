@@ -59,7 +59,7 @@ const AccountLogin: FC = () => {
 
   return (
     <TabsContent value="account">
-      <Card className="w-[400px] dark:border-white rounded">
+      <Card className="w-[400px] dark:border-gray-600 rounded-xl shadow-lg">
         <CardHeader>
           <CardTitle>Login your account</CardTitle>
           <CardDescription>

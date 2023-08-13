@@ -39,7 +39,7 @@ const msgCodeLoginFormSchema = z.object({
       message: "Make sure the input format is correct."
     }),
   code: z
-    .number()
+    .string()
     .min(4, {
       message: "Make sure the input format is correct."
     })
@@ -50,10 +50,7 @@ const msgCodeLoginFormSchema = z.object({
 
 type AccountLoginFormValues = z.infer<typeof msgCodeLoginFormSchema>
 
-const defaultValues: Partial<AccountLoginFormValues> = {
-  // name: "Your name",
-  // dob: new Date("2023-01-23"),
-}
+const defaultValues: Partial<AccountLoginFormValues> = {}
 
 const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
   const [run] = useMutation(SEND_MSG_CODE)
@@ -96,7 +93,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
 
   return (
     <TabsContent value="msg">
-      <Card className="w-[400px] dark:border-white rounded">
+      <Card className="w-[400px] dark:border-gray-600 rounded-xl shadow-lg">
         <CardHeader>
           <CardTitle>Login with msg code</CardTitle>
           <CardDescription>
@@ -106,6 +103,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* 输入手机号码 */}
               <FormField
                 name="tel"
                 rules={{
@@ -126,6 +124,8 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                   </FormItem>
                 )}
               />
+
+              {/* 获取验证码 */}
               <FormField
                 rules={{
                   required: true
@@ -141,7 +141,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                       </FormControl>
                       <Button
                         disabled={disabled}
-                        className="flex-1"
+                        className="flex-1 rounded-lg"
                         onClick={() => {
                           form.trigger("tel")
                           setDisabled(true)
@@ -150,12 +150,13 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                       >
                         code{disabled ? `(${count}s)` : ""}
                       </Button>
-                      <FormMessage />
                     </div>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-[350px] mx-auto">
+
+              <Button type="submit" className="w-[350px] mx-auto rounded-lg">
                 Log in
               </Button>
             </form>
