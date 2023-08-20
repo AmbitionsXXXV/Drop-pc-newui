@@ -3,6 +3,7 @@ import toast from "react-hot-toast"
 import { useMutation } from "@apollo/client"
 import { LOGIN } from "@/graphql/auth.ts"
 import { SUCCESS } from "@/constants/code.ts"
+import { AUTH_TOKEN } from "@/constants"
 
 export const useOnSubmit = <T extends FieldValues>(form: any): SubmitHandler<T> => {
   const [login] = useMutation(LOGIN)
@@ -15,6 +16,9 @@ export const useOnSubmit = <T extends FieldValues>(form: any): SubmitHandler<T> 
       variables: data
     })
     if (response.data.login.code === SUCCESS) {
+      // 存储 token
+      localStorage.setItem(AUTH_TOKEN, response.data.login.data)
+
       toast.success("登录成功", {
         style: {
           color: "var(--foreground)",

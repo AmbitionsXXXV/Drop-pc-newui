@@ -63,9 +63,10 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
     defaultValues
   })
 
+  // 登录提交
   const onSubmit = useOnSubmit<IMsgCodeFormInputs>(form)
 
-  // 写一个60s的倒计时函数
+  // 获取短信验证码的缓冲
   const countDown = () => {
     timerRef.current = window.setInterval(() => {
       setCount(prevCount => {
