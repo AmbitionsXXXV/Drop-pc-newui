@@ -5,7 +5,8 @@ import { AUTH_TOKEN } from "@/constants"
 const httpLink = createHttpLink({ uri: "//localhost:3000/graphql" })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem(AUTH_TOKEN)
+  const token =
+    sessionStorage.getItem(AUTH_TOKEN) || localStorage.getItem(AUTH_TOKEN)
 
   return {
     headers: {

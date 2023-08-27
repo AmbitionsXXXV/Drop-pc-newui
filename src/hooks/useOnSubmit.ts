@@ -4,9 +4,12 @@ import { useMutation } from "@apollo/client"
 import { LOGIN } from "@/graphql/auth.ts"
 import { SUCCESS } from "@/constants/code.ts"
 import { AUTH_TOKEN } from "@/constants"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 export const useOnSubmit = <T extends FieldValues>(form: any): SubmitHandler<T> => {
   const [login] = useMutation(LOGIN)
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
 
   return async data => {
     await form.trigger()
@@ -15,9 +18,15 @@ export const useOnSubmit = <T extends FieldValues>(form: any): SubmitHandler<T> 
     const response = await login({
       variables: data
     })
+    console.log("data>>", data)
     if (response.data.login.code === SUCCESS) {
-      // 存储 token
-      localStorage.setItem(AUTH_TOKEN, response.data.login.data)
+      if (data.autoLogin) {
+        sessionStorage.setItem(AUTH_TOKEN, "")
+        localStorage.setItem(AUTH_TOKEN, response.data.login.data)
+      } else {
+        localStorage.setItem(AUTH_TOKEN, "")
+        sessionStorage.setItem(AUTH_TOKEN, response.data.login.data)
+      }
 
       toast.success("登录成功", {
         style: {
@@ -26,14 +35,18 @@ export const useOnSubmit = <T extends FieldValues>(form: any): SubmitHandler<T> 
           borderColor: "var(--border)"
         }
       })
-    } else {
-      toast.error(response.data.login.message, {
-        style: {
-          color: "var(--foreground)",
-          background: "var(--background)",
-          borderColor: "var(--border)"
-        }
-      })
+
+      navigate(params.get("orgUrl") || "")
+
+      return
     }
+
+    toast.error(response.data.login.message, {
+      style: {
+        color: "var(--foreground)",
+        background: "var(--background)",
+        borderColor: "var(--border)"
+      }
+    })
   }
 }

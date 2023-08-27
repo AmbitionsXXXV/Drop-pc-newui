@@ -27,6 +27,7 @@ import { IMsgCodeFormInputs } from "@/container/Login/interface.ts"
 import { RE__MOBILE } from "@/constants"
 import { useOnSubmit } from "@/hooks/useOnSubmit.ts"
 import toast from "react-hot-toast"
+import { Checkbox } from "@/components/ui/checkbox.tsx"
 
 interface IMsgCodeLoginProps {}
 
@@ -46,12 +47,15 @@ const msgCodeLoginFormSchema = z.object({
     })
     .max(4, {
       message: "Make sure the input format is correct."
-    })
+    }),
+  autoLogin: z.boolean().default(false)
 })
 
 type AccountLoginFormValues = z.infer<typeof msgCodeLoginFormSchema>
 
-const defaultValues: Partial<AccountLoginFormValues> = {}
+const defaultValues: Partial<AccountLoginFormValues> = {
+  tel: "18258145396"
+}
 
 const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
   const [run] = useMutation(SEND_MSG_CODE, {
@@ -164,6 +168,25 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                       </Button>
                     </div>
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* 自动登陆 */}
+              <FormField
+                name="autoLogin"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 leading-none">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>check for auto login</FormLabel>
+                    </div>
                   </FormItem>
                 )}
               />

@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { connect, useUserContext } from "@/lib/userHooks.ts"
+import { connect, useUserContext } from "@/hooks/userHooks.ts"
 
 interface IHomeProps {}
 
