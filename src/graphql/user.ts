@@ -9,3 +9,12 @@ export const FIND = gql`
     }
   }
 `
+
+export const GET_USER_INFO = gql`
+  query getUserInfo {
+    getUserInfo {
+      id
+      tel
+    }
+  }
+`

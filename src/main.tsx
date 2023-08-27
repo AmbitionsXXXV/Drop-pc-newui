@@ -5,18 +5,22 @@ import { client } from "@/lib/apollo.ts"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { ROUTE_CONFIG } from "@/router"
 import { ThemeProvider } from "@/components/theme-provider"
+import UserInfo from "@/components/UserInfo"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ApolloProvider client={client}>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <BrowserRouter>
-        <Routes>
-          {ROUTE_CONFIG.map(item => (
-            <Route path={item.path} key={item.key} element={<item.element />} />
-          ))}
-          {/*<Route path="*" element={<Page404 />} />*/}
-        </Routes>
-      </BrowserRouter>
+      {/* 获取用户信息 */}
+      <UserInfo>
+        <BrowserRouter>
+          <Routes>
+            {ROUTE_CONFIG.map(item => (
+              <Route path={item.path} key={item.key} element={<item.element />} />
+            ))}
+            {/*<Route path="*" element={<Page404 />} />*/}
+          </Routes>
+        </BrowserRouter>
+      </UserInfo>
     </ThemeProvider>
   </ApolloProvider>
 )

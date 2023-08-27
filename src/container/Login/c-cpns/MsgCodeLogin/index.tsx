@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button.tsx"
 import { IMsgCodeFormInputs } from "@/container/Login/interface.ts"
 import { RE__MOBILE } from "@/constants"
 import { useOnSubmit } from "@/hooks/useOnSubmit.ts"
+import toast from "react-hot-toast"
 
 interface IMsgCodeLoginProps {}
 
@@ -53,7 +54,17 @@ type AccountLoginFormValues = z.infer<typeof msgCodeLoginFormSchema>
 const defaultValues: Partial<AccountLoginFormValues> = {}
 
 const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
-  const [run] = useMutation(SEND_MSG_CODE)
+  const [run] = useMutation(SEND_MSG_CODE, {
+    onCompleted: () => {
+      toast.success("验证码成功", {
+        style: {
+          color: "var(--foreground)",
+          background: "--background",
+          borderColor: "var(--border)"
+        }
+      })
+    }
+  })
   const [count, setCount] = useState(60)
   const [disabled, setDisabled] = useState(false)
   const timerRef = useRef<number | null>(null)
@@ -119,7 +130,7 @@ const MsgCodeLogin: FC<IMsgCodeLoginProps> = () => {
                       <Input placeholder="telephone" {...field} />
                     </FormControl>
                     <FormDescription>
-                      This is your public display name.
+                      This is your personal phone number.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

@@ -1,9 +1,13 @@
 import { FC } from "react"
+import { connect, useUserContext } from "@/lib/userHooks.ts"
 
 interface IHomeProps {}
 
 const Home: FC<IHomeProps> = () => {
-  return <div></div>
+  const { store } = useUserContext()
+  console.log(store)
+
+  return <div>aaa</div>
 }
 
-export default Home
+export default connect(Home)
