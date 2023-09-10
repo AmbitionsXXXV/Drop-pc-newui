@@ -1,11 +1,10 @@
-import { Dispatch, ReactNode, SetStateAction } from "react"
+import { ReactNode } from "react"
 
-export interface IStore {
+export interface IStore<T> {
   key: string
-  store: Record<string, any>
-  setStore: Dispatch<SetStateAction<Record<string, any>>>
+  store: T
+  setStore: (payload: T) => void
 }
-
 export interface IProp {
   children: ReactNode
 }

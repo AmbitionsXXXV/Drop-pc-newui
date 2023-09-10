@@ -1,33 +1,34 @@
 import { Context, createContext, FC, useContext, useMemo, useState } from "react"
 import { IProp, IStore } from "@/lib/types.ts"
 
-const getCxtProvider =
-  (key: string, defaultValue: Record<string, any>, AppContext: Context<IStore>) =>
-  ({ children }: IProp) => {
+function getCxtProvider<T = Record<string, any>>(
+  key: string,
+  defaultValue: T,
+  AppContext: Context<IStore<T>>
+) {
+  return ({ children }: IProp) => {
     const [store, setStore] = useState(defaultValue)
     const value = useMemo(() => ({ key, store, setStore }), [store])
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
   }
+}
 
 const ctxCache: Record<string, Ctx> = {}
 
-class Ctx {
-  defaultStore: IStore
-  AppContext: Context<IStore>
+class Ctx<T = any> {
+  defaultStore: IStore<T>
+  AppContext: Context<IStore<T>>
   Provider: ({ children }: IProp) => JSX.Element
 
-  constructor(key: string, defaultValue: Record<string, any>) {
+  constructor(key: string, defaultValue: T) {
     this.defaultStore = {
       key,
       store: defaultValue,
       setStore: () => {}
     }
-
     this.AppContext = createContext(this.defaultStore)
-
-    this.Provider = getCxtProvider(key, this.defaultStore, this.AppContext)
-
+    this.Provider = getCxtProvider(key, defaultValue, this.AppContext)
     ctxCache[key] = this
   }
 }
